@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MM Books — Bookkeeping Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --bg: #f7f9fc;
+      --brand: #3b82f6;
+      --brand-dark: #1d4ed8;
+      --accent: #f59e0b;
+      --card: #ffffff;
+      --card-hover: rgba(59,130,246,0.1);
+      --ring: rgba(59,130,246,.2);
+      --shadow: 0 10px 25px rgba(0,0,0,.08);
+      --radius: 16px;
+      --font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin:0;
+      font-family:var(--font-family);
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.6;
+    }
+
+    /* Navigation */
+    .nav { position: sticky; top:0; z-index:50; backdrop-filter:saturate(120%) blur(6px); background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65)); border-bottom:1px solid rgba(0,0,0,.06); box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+    .nav-inner { max-width:1100px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; }
+    .brand { display:flex; align-items:center; gap:0.6rem; font-weight:700; font-size:1.25rem; color:var(--brand-dark);}
+    .logo { width:50px; height:50px; border-radius:12px; display:grid; place-items:center; color:white; font-weight:700; font-size:1.25rem; background: var(--brand); box-shadow: var(--shadow); }
+    .nav a { color: var(--ink); text-decoration:none; font-weight:600; transition:color 0.25s ease;}
+    .nav a:hover, .nav a:focus { color:var(--brand-dark); outline:none; }
+    .nav-links { display:flex; gap:1.2rem; align-items:center; }
+    .cta { background: var(--accent); color:#111; padding:0.6rem 1.1rem; border-radius:999px; font-weight:700; box-shadow:var(--shadow); transition:filter 0.25s ease;}
+    .cta:hover, .cta:focus { filter: brightness(0.9); outline:none; }
+
+    /* Hero */
+    header.hero { background:
+      radial-gradient(1000px 500px at 80% -10%, rgba(59,130,246,0.18), transparent 50%),
+      radial-gradient(900px 450px at 0% 0%, rgba(245,158,11,0.18), transparent 40%),
+      linear-gradient(135deg, #0f172a, #1f2937);
+      color:white; text-align:center; padding:80px 20px 64px; }
+    .hero h1 { margin:0 0 0.35rem; font-size:clamp(28px,4vw,48px); font-weight:700; line-height:1.2; text-shadow:0 2px 8px rgba(0,0,0,0.25);}
+    .hero p { margin:0 auto 1.5rem; max-width:700px; font-weight:300; color:#e5e7eb; text-shadow:0 1px 4px rgba(0,0,0,0.15); }
+
+    /* Sections */
+    section { padding:60px 20px; max-width:1100px; margin:auto; }
+    h2.section-title { font-size:2rem; font-weight:700; margin-bottom:12px; color:var(--brand-dark); }
+    p.section-sub { font-weight:300; color:var(--muted); margin-bottom:24px; }
+
+    /* Services Cards */
+    #services h2, #services p { text-align:left; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:24px; }
+    @media(max-width:900px){ .cards{grid-template-columns:repeat(2,1fr);} }
+    @media(max-width:620px){ .cards{grid-template-columns:1fr;} }
+
+    .flip-card { height:260px; perspective:1000px; }
+    .flip-inner { position:relative; width:100%; height:100%; transition:transform 0.6s; transform-style:preserve-3d; cursor:pointer; }
+    .flip-front, .flip-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; box-shadow:var(--shadow); background: var(--card); transition: background 0.3s, box-shadow 0.3s; }
+    .flip-back { transform:rotateY(180deg); color:var(--ink); text-align:center; background: var(--card-hover); }
+
+    .flip-front h3 { margin-top:12px; }
+    .flip-front div.icon { font-size:2rem; }
+
+    @media(hover:hover) and (pointer:fine){ .flip-card:hover .flip-inner { transform:rotateY(180deg); } }
+    .flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+
+    /* Pricing */
+    #pricing { text-align:center; }
+    #pricing p { max-width:600px; margin:0 auto 24px; color:var(--muted); }
+    #pricing .btn-primary { font-size:1rem; padding:0.85rem 1.5rem; }
+
+    /* About */
+    .about-grid { display:grid; grid-template-columns:1.2fr 0.8fr; gap:32px; align-items:center; margin-top:32px; }
+    @media(max-width:900px){ .about-grid{grid-template-columns:1fr; gap:40px;} }
+    .headshots { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+    .shot { background:var(--card); border-radius:20px; padding:18px 14px 24px; text-align:center; box-shadow:var(--shadow); transition: box-shadow 0.3s ease; cursor:default; }
+    .shot:hover, .shot:focus-within { box-shadow:0 20px 48px rgba(0,0,0,0.2); }
+    .avatar { width:160px; height:160px; border-radius:50%; margin:8px auto 16px; background:#cbd5e1 center/cover no-repeat; box-shadow:0 5px 15px rgba(0,0,0,0.12); transition:transform 0.3s ease; }
+    .shot:hover .avatar, .shot:focus-within .avatar { transform:scale(1.05); }
+    .shot strong { font-weight:700; font-size:1.1rem; color:var(--brand-dark); display:block; margin-bottom:4px; }
+    .shot small { color:var(--muted); font-weight:500; }
+
+    /* Footer */
+    footer { background: linear-gradient(135deg, #0f172a, #1f2937); color:#cbd5e1; padding:24px 20px; text-align:center; margin-top:32px; font-size:0.9rem; user-select:none; }
+    footer a { color:#fff; text-decoration:none; font-weight:600; transition:color 0.25s ease; }
+    footer a:hover, footer a:focus { color:var(--accent); outline:none; }
+
+    #pricing .btn-primary:hover {
+      background: var(--brand-dark);
+      color: #fff;
+    }
+
+    /* Divider */
+    .divider {
+      width: 90%;
+      max-width: 1000px;
+      height: 2.5px;
+      background: rgba(59,130,246,0.6);
+      margin: 40px auto;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">MM</div>
+        <a href="#top" aria-label="MM Books Home">MM Books</a>
+      </div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#about">About</a>
+        <a class="cta" href="mailto:contact.mmbooks@gmail.com?subject=MM%20Books%20Quote%20Request">Get a Quote</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="top" class="hero" role="banner">
+    <h1>Bookkeeping that helps you breathe easier</h1>
+    <p>MM Books handles the numbers—so you can focus on running the business. Accurate books, on-time payroll, and clear financials, delivered with care.</p>
+  </header>
+
+  <!-- Services -->
+  <section id="services" aria-labelledby="services-title">
+    <h2 id="services-title" class="section-title">Our Services</h2>
+    <p class="section-sub">Hover over or tap any service to learn more.</p>
+    <div class="cards">
+      <article class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="icon">📘</div><h3>Base Bookkeeping</h3></div>
+          <div class="flip-back"><div class="icon">📘</div><p>Daily/weekly categorization, reconciliations, and monthly financial reports to keep you on track.</p></div>
+        </div>
+      </article>
+      <article class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="icon">💳</div><h3>Payroll Processing</h3></div>
+          <div class="flip-back"><div class="icon">💳</div><p>Stress-free payroll: on-time runs, precise tax calculations, and fully compliant employee filings.</p></div>
+        </div>
+      </article>
+      <article class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="icon">📊</div><h3>Advanced Reporting</h3></div>
+          <div class="flip-back"><div class="icon">📊</div><p>Cash flow projections, budget vs. actual, and custom reports for sharper decisions.</p></div>
+        </div>
+      </article>
+      <article class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="icon">🧾</div><h3>Expense Management</h3></div>
+          <div class="flip-back"><div class="icon">🧾</div><p>Automated expense systems and vendor categorization for higher transaction volumes.</p></div>
+        </div>
+      </article>
+      <article class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="icon">📨</div><h3>AP & AR</h3></div>
+          <div class="flip-back"><div class="icon">📨</div><p>Manage vendor payments, send invoices, and coordinate collections to keep cash moving.</p></div>
+        </div>
+      </article>
+      <article class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="icon">☁️</div><h3>Cloud Setup</h3></div>
+          <div class="flip-back"><div class="icon">☁️</div><p>We'll get Quickbooks and your tools set up so you can start strong without a tech headache.</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.flip-card').forEach(card => {
+      card.addEventListener('click', ()=> card.classList.toggle('flipped'));
+    });
+  </script>
+
+  <div class="divider"></div>
+
+  <section id="pricing" aria-labelledby="pricing-title" style="background: var(--bg); padding: 80px 20px; text-align: center;">
+    <h2 id="pricing-title" class="section-title">Get Your Free Quote</h2>
+    <p style="max-width: 700px; margin: 0 auto 32px; color: var(--muted); font-size: 1.1rem; line-height: 1.6;">
+      Every business is different — that’s why we don’t believe in cookie-cutter pricing.
+      We’ll learn about your goals, assess your needs, and give you a clear, no-obligation
+      quote so you know exactly what to expect.
+    </p>
+    <a href="mailto:contact.mmbooks@gmail.com?subject=MM%20Books%20Free%20Quote" 
+       class="btn btn-primary" 
+       style="background: var(--brand); color: #fff; padding: 0.85rem 1.6rem; font-weight: 700; border-radius: 12px; box-shadow: var(--shadow); text-decoration: none; display: inline-block; transition: background 0.3s;">
+      Get My Free Quote
+    </a>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- About -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="about-grid">
+      <div>
+        <h2 id="about-title" class="section-title">Who We Are</h2>
+        <p class="section-sub">We’re a small, detail-obsessed bookkeeping team. We believe clean books save time, reduce stress, and make better decisions inevitable.</p>
+        <ul style="padding-left: 20px; margin-top: 8px; color: var(--muted); font-weight: 500;">
+          <li>U.S.-based, responsive, and proactive</li>
+          <li>Specialists in QuickBooks</li>
+          <li>Aspiring enterpreneurs </li>
+        </ul>
+      </div>
+      <div class="headshots" aria-label="Team headshots">
+        <figure class="shot">
+          <div class="avatar" style="background-image:url('zane.jpeg')"></div>
+          <figcaption>
+            <strong>Zane Miller</strong><br />
+            <small>Certified Bookkeeping Professional</small>
+          </figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="avatar" style="background-image:url('alex.jpeg')"></div>
+          <figcaption>
+            <strong>Alex Morello</strong><br />
+            <small>Assistant Bookkeeper</small>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <div style="margin-bottom: 8px; font-weight: 600;">MM Books</div>
+      <div style="font-size: 14px; opacity: 0.9;">
+        © <span id="year"></span> MM Books •
+        <a href="mailto:contact.mmbooks@gmail.com">contact.mmbooks@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fade-in on scroll
+    const sections = document.querySelectorAll('section');
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      }
+    }, { threshold: 0.16 });
+    sections.forEach((s) => io.observe(s));
+
+    // Current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
